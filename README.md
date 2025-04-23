@@ -1,15 +1,29 @@
 # 🏗️ Tours Databricks Pipeline & ML Dashboard
 
 ## 📌 Contexte
-Ce projet traite les mutations immobilières via un pipeline Databricks, allant de la **bronze** à la **gold**, suivi d’un **modèle de machine learning** prédictif pour estimer les prix au m². Le tout est orchestré et automatisé via des **workflows Databricks**.
+Ce travail les mutations immobilières via un pipeline Databricks, allant de la **bronze** à la **gold**, suivi d’un **modèle de machine learning** prédictif pour estimer les **prix au m²**. Le tout est orchestré et automatisé via des **workflows Databricks**.
 
 ---
 
 ## ⚙️ Architecture du Pipeline
 
-- 🔸 **Bronze** : ingestion brute (fichier mutation.csv)
-- 🔹 **Silver** : nettoyage, typage et enrichissement
-- 🟡 **Gold** : table de faits + dimensions (bien, localisation, nature, date)
+- 🔸 **Bronze** : ingestion brute des données depuis **Azure SQL Database** et sources locales 
+- 🔹 **Silver** : nettoyage, typage, enrichissement (calculs, filtrage…)
+- 🟡 **Gold** : construction de la **table de faits** et des **dimensions** :
+  - bien
+  - localisation
+  - nature de mutation
+  - date
+
+---
+
+## 📊 Visualisation des KPIs
+
+Les données gold sont **connectées à Power BI** afin de visualiser les indicateurs métiers :
+- Valeur foncière moyenne par commune
+- Prix au m² par type de bien
+- Comparaison inter-annuelle
+- Evolution géographique
 
 ---
 
@@ -19,29 +33,34 @@ Ce projet traite les mutations immobilières via un pipeline Databricks, allant 
 - 🔍 Algorithmes testés :
   - Régression Linéaire
   - Random Forest
-- 📊 Meilleur modèle : Random Forest avec **R² ≈ 0.48**
+- 📊 Meilleur modèle : **Random Forest** avec **R² ≈ 0.48**
 
 ---
 
 ## 🔁 Automatisation
 
-Deux workflows Databricks :
+Deux **workflows Databricks** orchestrent le projet :
 
 1. **ETL Workflow**
    - Fréquence : quotidienne
-   - Rôle : mise à jour des données de la silver à la gold
+   - Objectif : charger les nouvelles données et mettre à jour les tables gold
 
 2. **ML Workflow**
    - Fréquence : tous les 3 jours
-   - Rôle : réentraînement automatique du modèle sur les dernières données
+   - Objectif : réentraîner automatiquement le modèle sur les dernières données disponibles
 
 ---
 
 ## 🧪 Suivi & Logs
 
 - 📁 Résultats stockés dans le dossier `dvfgold`
-- 📝 Logs d'entraînement conservés (RMSE, R², importance des variables)
-- 🔢 Sélection automatique du meilleur modèle selon RMSE
+- 📝 Historique des logs d'entraînement (RMSE, R², importance des features)
+- 🔢 Sélection automatique du **meilleur modèle** (basé sur le RMSE)
 
 ---
+
+## 🚀 Lancer localement
+
+```bash
+git clone https://github.com/sambafall1409/Tours-Databricks-pipeline-model-dashboard.git
 
