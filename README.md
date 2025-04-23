@@ -1,7 +1,9 @@
 # 🏗️ Tours Databricks Pipeline & ML Dashboard
 
 ## 📌 Contexte
-Ce projet traite les mutations immobilières via un pipeline **Databricks**, allant de la **bronze** à la **gold**, suivi d’un **modèle de machine learning** prédictif pour estimer les **prix au m²**. L’ensemble est **automatisé via des workflows Databricks** et **connecté à Power BI** pour l’analyse des KPIs métiers.
+Sur ce travail je traite les **mutations immobilières** (ventes et locations de **maisons** et **appartements**) sur une période de **13 ans**, via un pipeline **Databricks**, allant de la **bronze** à la **gold**. Ce pipeline est suivi d’un **modèle de machine learning** prédictif pour estimer les **prix au m²**.
+
+L’ensemble est **orchestré automatiquement via des workflows Databricks** et **connecté à Power BI** pour permettre la **visualisation des KPIs métiers** sur l’évolution du marché immobilier.
 
 ---
 
