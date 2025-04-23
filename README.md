@@ -1,15 +1,15 @@
 # 🏗️ Tours Databricks Pipeline & ML Dashboard
 
 ## 📌 Contexte
-Ce travail les mutations immobilières via un pipeline Databricks, allant de la **bronze** à la **gold**, suivi d’un **modèle de machine learning** prédictif pour estimer les **prix au m²**. Le tout est orchestré et automatisé via des **workflows Databricks**.
+Ce projet traite les mutations immobilières via un pipeline **Databricks**, allant de la **bronze** à la **gold**, suivi d’un **modèle de machine learning** prédictif pour estimer les **prix au m²**. L’ensemble est **automatisé via des workflows Databricks** et **connecté à Power BI** pour l’analyse des KPIs métiers.
 
 ---
 
 ## ⚙️ Architecture du Pipeline
 
-- 🔸 **Bronze** : ingestion brute des données depuis **Azure SQL Database** et sources locales 
-- 🔹 **Silver** : nettoyage, typage, enrichissement (calculs, filtrage…)
-- 🟡 **Gold** : construction de la **table de faits** et des **dimensions** :
+- 🔸 **Bronze** : ingestion brute depuis **Azure SQL Database** et **sources locales**
+- 🔹 **Silver** : nettoyage, typage, enrichissement des données
+- 🟡 **Gold** : modélisation en **étoile** avec une table de faits et plusieurs dimensions :
   - bien
   - localisation
   - nature de mutation
@@ -19,43 +19,53 @@ Ce travail les mutations immobilières via un pipeline Databricks, allant de la 
 
 ## 📊 Visualisation des KPIs
 
-Les données gold sont **connectées à Power BI** afin de visualiser les indicateurs métiers :
-- Valeur foncière moyenne par commune
-- Prix au m² par type de bien
-- Comparaison inter-annuelle
-- Evolution géographique
+Les données **gold** alimentent un **dashboard Power BI** connecté, permettant de suivre :
+- L'évolution des **valeurs foncières par commune**
+- Les **prix au m² par type de bien**
+- La **répartition temporelle et géographique**
+- L’impact du **type d’acquéreur** et de la **nature de mutation**
 
 ---
 
 ## 🤖 Machine Learning
 
-- 🎯 Objectif : prédire le **prix au m²**
-- 🔍 Algorithmes testés :
+- 🎯 Objectif : expliquer les facteurs influençant le **prix au m²**
+- 🧠 Algorithmes testés :
   - Régression Linéaire
-  - Random Forest
-- 📊 Meilleur modèle : **Random Forest** avec **R² ≈ 0.48**
+  - Random Forest (meilleur score)
+
+> 📌 **NB :** Le modèle est **expliquant, non prédictif**. Son but est de **valider les hypothèses métiers** :
+> - 🏘️ La **localisation** (code INSEE) est **le facteur le plus déterminant**
+> - 👥 Le **type d’acheteur** (rolea)
+> - 📦 La **nature de mutation**
+> - 📅 Le **mois de mutation**
+
+- 📊 **Performance du meilleur modèle :**
+  - RMSE ≈ **749**
+  - R² ≈ **0.48**
+  - Feature importance montrant une **prédominance géographique forte**
 
 ---
 
-## 🔁 Automatisation
+## 🔁 Automatisation (Workflows Databricks)
 
-Deux **workflows Databricks** orchestrent le projet :
+1. **ETL Workflow**  
+   - ⏱️ Fréquence : quotidienne  
+   - 🛠️ Rôle : alimentation des couches silver & gold
 
-1. **ETL Workflow**
-   - Fréquence : quotidienne
-   - Objectif : charger les nouvelles données et mettre à jour les tables gold
-
-2. **ML Workflow**
-   - Fréquence : tous les 3 jours
-   - Objectif : réentraîner automatiquement le modèle sur les dernières données disponibles
+2. **ML Workflow**  
+   - ⏱️ Fréquence : tous les 3 jours  
+   - 🧠 Rôle : réentraînement automatique du modèle ML
 
 ---
 
 ## 🧪 Suivi & Logs
 
-- 📁 Résultats stockés dans le dossier `dvfgold`
-- 📝 Historique des logs d'entraînement (RMSE, R², importance des features)
-- 🔢 Sélection automatique du **meilleur modèle** (basé sur le RMSE)
+- 📁 Données de sortie dans : `/dvfgold`
+- 📌 **Historique complet** :
+  - RMSE / R²
+  - Importance des features
+- ✅ Sélection automatique du meilleur modèle via comparaison multi-algorithmes
 
 ---
 
@@ -63,4 +73,3 @@ Deux **workflows Databricks** orchestrent le projet :
 
 ```bash
 git clone https://github.com/sambafall1409/Tours-Databricks-pipeline-model-dashboard.git
-
